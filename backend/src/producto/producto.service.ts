@@ -11,7 +11,7 @@ export class ProductoService {
     });
 
     if (existing) {
-      throw new ConflictException('Ya existe un producto con este id en el sistema');
+      throw new ConflictException('Ya existe un producto con este código en el sistema');
     }
 
     return prisma.producto.create({ data });
@@ -24,7 +24,7 @@ export class ProductoService {
   async findOne(codigo: number) {
     const producto = await prisma.producto.findUnique({ where: { codigo } });
     if (!producto) {
-      throw new ConflictException('No existe un producto con este id en el sistema');
+      throw new ConflictException('No existe un producto con este código en el sistema');
     }
     return prisma.producto.findUnique({ where: { codigo } });
   }
