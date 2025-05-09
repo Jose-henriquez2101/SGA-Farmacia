@@ -12,3 +12,11 @@ model User {
   name  String
   email String @unique
 }
+
+model Cliente {
+  id        Int    @id @default(autoincrement())
+  nombre    String
+  rut       String @unique
+  direccion String
+  telefono  String
+}
