@@ -34,7 +34,7 @@ pipeline {
           // Esperar a que el puerto 3306 esté activo
           sh '''
           for i in {1..10}; do
-            nc -z db 3306 && echo "MySQL está listo" && exit 0
+            docker exec mysql_container mysqladmin --user=root --password=root --host=db --port=3306 ping --silent && echo "MySQL está listo" && exit 0
             echo "Esperando MySQL..."
             sleep 5
           done
