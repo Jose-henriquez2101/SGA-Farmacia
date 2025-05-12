@@ -20,3 +20,12 @@ model Cliente {
   direccion String
   telefono  String
 }
+
+model Producto {
+id Int @id @default(autoincrement())
+nombre String
+categoria String
+cantidad Int
+createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+}
