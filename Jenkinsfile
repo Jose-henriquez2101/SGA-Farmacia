@@ -5,6 +5,7 @@ pipeline {
     DATABASE_URL = 'mysql://root:root@db:3306/crud_db'
   }
 
+  stages {
     stage('Construir imágenes Docker') {
       steps {
         script {
@@ -24,7 +25,6 @@ pipeline {
     stage('Esperar MySQL') {
       steps {
         script {
-          // Esperar a que el puerto 3306 esté activo
           sh '''
           for i in {1..10}; do
             docker exec mysql_container mysqladmin --user=root --password=root --host=db --port=3306 ping --silent && echo "MySQL está listo" && exit 0
@@ -73,7 +73,6 @@ pipeline {
     }
     always {
       script {
-        // Mostrar logs si algo sale mal, útil para debugging
         sh 'docker-compose logs --tail=50'
       }
     }
