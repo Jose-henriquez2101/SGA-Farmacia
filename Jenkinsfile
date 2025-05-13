@@ -65,13 +65,14 @@ pipeline {
   }
 
   post {
-    success {
-      echo '✅ Aplicación levantada exitosamente con Docker.'
-    }
-    failure {
-      echo '❌ Hubo un error en el pipeline.'
-    }
-    always {
+  success {
+    echo '✅ Aplicación levantada exitosamente con Docker.'
+  }
+  failure {
+    echo '❌ Hubo un error en el pipeline.'
+  }
+  always {
+    node {
       script {
         sh 'docker-compose logs --tail=50'
       }
