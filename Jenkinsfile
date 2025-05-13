@@ -1,15 +1,14 @@
 pipeline {
   agent any
-
-  environment {
-    DATABASE_URL = 'mysql://root:root@db:3306/crud_db'
-  }
-
   stage('Checkout') {
     steps {
       git url: 'https://github.com/Jose-henriquez2101/SGA-Farmacia.git', branch: 'Jose'
     }
   }
+  environment {
+    DATABASE_URL = 'mysql://root:root@db:3306/crud_db'
+  }
+
 
   stages {
     stage('Construir imágenes Docker') {
