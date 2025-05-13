@@ -22,4 +22,4 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-c
 # Agregar el usuario Jenkins al grupo Docker para que pueda usar Docker sin sudo
 RUN usermod -aG docker jenkins
 
-USER jenkins
+# USER jenkins

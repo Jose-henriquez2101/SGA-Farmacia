@@ -5,13 +5,6 @@ pipeline {
     DATABASE_URL = 'mysql://root:root@db:3306/crud_db'
   }
 
-  stages {
-    stage('Clonar repositorio') {
-      steps {
-        git url: 'https://github.com/Jose-henriquez2101/SGA-Farmacia.git', branch: 'Jose'
-      }
-    }
-
     stage('Construir imágenes Docker') {
       steps {
         script {
