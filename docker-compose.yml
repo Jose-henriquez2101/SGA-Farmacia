@@ -33,6 +33,10 @@ services:
     - grafana-data:/var/lib/grafana
     ports:
     - 3001:3000
+    environment:
+      - GF_SECURITY_ALLOW_ORIGIN=http://localhost:3001
+    depends_on:
+      - prometheus
 
   prometheus:
     image: prom/prometheus:v2.28.1
@@ -55,12 +59,7 @@ services:
     restart: unless-stopped
     ports:
     - 9100:9100
-    ###### linux
-    # command:
-    # - '--path.rootfs=/host'
-    # pid: host
-    # volumes:
-    # - '/:/host:ro,rslave'
+    
     ###### windows
     volumes:
       - /proc:/host/proc:ro
@@ -75,13 +74,14 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     restart: unless-stopped
-    expose:
-    - 8080
+    ports:
+    - 8080:8080
     volumes:
     - /:/rootfs:ro
     - /var/run:/var/run:rw
     - /sys:/sys:ro
     - /var/lib/docker/:/var/lib/docker:ro
+    - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
 
 volumes:
   db_data:
