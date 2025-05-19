@@ -52,7 +52,6 @@ jobs:
         working-directory: ./backend
         run: npm run test:e2e
 
-jobs:
   create-docker-image:
     needs: test
     runs-on: ubuntu-latest
