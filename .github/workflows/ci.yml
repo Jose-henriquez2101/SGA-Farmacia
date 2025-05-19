@@ -68,8 +68,8 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build . --tag ghcr.io/Jose-henriquez2101/SGA-Farmacia:latest
-        docker push ghcr.io/Jose-henriquez2101/SGA-Farmacia:latest
+        docker build . --tag ghcr.io/jose-henriquez2101/sga-farmacia:latest
+        docker push ghcr.io/jose-henriquez2101/sga-farmacia:latest
 
 
   deploy:
