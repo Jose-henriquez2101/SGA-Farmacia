@@ -44,9 +44,9 @@ jobs:
         working-directory: ./backend
         run: npx prisma generate
 
-      - name: Apply Prisma Migrations
+      - name: Push Prisma schema
         working-directory: ./backend
-        run: npx prisma migrate deploy
+        run: npx prisma db push
 
       - name: Run E2E Tests
         working-directory: ./backend
