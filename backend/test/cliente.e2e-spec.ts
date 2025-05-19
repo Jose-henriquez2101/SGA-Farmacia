@@ -1,7 +1,7 @@
 // test/cliente.e2e-spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest'; 
 import { ClienteModule } from '../src/cliente/cliente.module';
 import { PrismaClient } from '@prisma/client';
 
