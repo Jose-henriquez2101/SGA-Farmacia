@@ -71,7 +71,7 @@ jobs:
         docker build . --tag ghcr.io/Jose-henriquez2101/SGA-Farmacia:latest
         docker push ghcr.io/Jose-henriquez2101/SGA-Farmacia:latest
 
-jobs:
+
   deploy:
     needs: create-docker-image
     runs-on: ubuntu-latest
