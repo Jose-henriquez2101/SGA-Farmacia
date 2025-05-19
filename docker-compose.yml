@@ -24,7 +24,7 @@ services:
       - ./backend:/app:cached
     depends_on:
       - db
-    command: npm run start:dev
+    command: sh -c "npx prisma generate && npx prisma db push && npm run start:dev"
 
 
 volumes:
