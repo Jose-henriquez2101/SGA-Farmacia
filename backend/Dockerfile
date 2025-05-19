@@ -1,14 +1,31 @@
+FROM node:18 AS builder
+
+WORKDIR /app
+
+
+RUN npm install -g pnpm
+COPY package*.json ./
+
+RUN pnpm install
+
+COPY . .
+
+RUN pnpm build
+
+
+#Etapa de producción
 FROM node:18
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+RUN npm install -g pnpm
 
-COPY . .
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/pnpm-lock.yaml ./
 
-RUN npm install -g @nestjs/cli
+RUN pnpm install --prod
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "start"]
