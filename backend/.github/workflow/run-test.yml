@@ -1,0 +1,24 @@
+name: Run test suite
+on: push
+
+jobs:
+  run-test:
+    name: ejemplos de test
+    runs-on: ubuntu-latest
+    container:
+      image: mysql:8.0
+      ports:
+        - 3306:3306
+      env:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: crud_db
+      options: >-
+        --health-cmd "mysqladmin ping -h localhost" --health-interval 10s
+        --health-timeout 5s --health-retries 3
+
+    steps:
+      -name:  Running composer install
+      -run: composer install
+      
+      -name: Running phpunit
+      -run: ./vendor/bin/phpunit
