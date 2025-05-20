@@ -5,11 +5,13 @@ WORKDIR /app
 
 RUN npm install -g pnpm
 COPY package*.json ./
+COPY prisma ./prisma
+COPY pnpm-lock.yaml ./
 
 RUN pnpm install
 
 COPY . .
-
+RUN pnpm prisma generate
 RUN pnpm build
 
 
@@ -23,6 +25,7 @@ RUN npm install -g pnpm
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/pnpm-lock.yaml ./
+COPY --from=builder /app/prisma ./prisma
 
 RUN pnpm install --prod
 
