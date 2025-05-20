@@ -7,10 +7,10 @@ RUN npm install -g pnpm
 COPY package*.json ./
 COPY prisma ./prisma
 
-RUN pnpm install
+RUN pnpm install --ignore-scripts=false
 
 COPY . .
-RUN pnpm prisma generate
+RUN npx prisma generate
 RUN pnpm build
 
 
