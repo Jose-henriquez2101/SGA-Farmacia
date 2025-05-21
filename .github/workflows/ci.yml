@@ -85,7 +85,8 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -i ~/.ssh/ec2_key.pem -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+          ssh -i ~/.ssh/ec2_key.pem -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_IP }} << EOF
+            docker login ghcr.io -u jose-henriquez2101 -p ${{ secrets.TOKEN_CD }}
             docker pull ghcr.io/jose-henriquez2101/sga-farmacia:latest
             docker stop sga-farmacia || true
             docker rm sga-farmacia || true
