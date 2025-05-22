@@ -81,11 +81,10 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key.pem
           chmod 600 ~/.ssh/ec2_key.pem
-          echo "${{ secrets.EC2_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
       - name: Deploy to EC2
         run: |
-          ssh -i ~/.ssh/ec2_key.pem ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no UserKnownHostsFile=/dev/null -i ~/.ssh/ec2_key.pem ec2-user@${{ secrets.EC2_IP }} << 'EOF'
             docker pull ghcr.io/jose-henriquez2101/sga-farmacia:latest
             docker stop sga-farmacia || true
             docker rm sga-farmacia || true
