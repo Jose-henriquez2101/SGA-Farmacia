@@ -85,8 +85,10 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/ec2_key.pem ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+            set -e
+            echo "${{ secrets.TOKEN_CD }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull ghcr.io/jose-henriquez2101/sga-farmacia:latest
-            docker stop sga-farmacia || true
-            docker rm sga-farmacia || true
+            docker stop sga-farmacia || echo "No container to stop"
+            docker rm sga-farmacia || echo "No container to remove"
             docker run -d --name sga-farmacia -p 80:3000 ghcr.io/jose-henriquez2101/sga-farmacia:latest
           EOF
