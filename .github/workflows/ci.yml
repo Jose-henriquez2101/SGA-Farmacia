@@ -90,5 +90,14 @@ jobs:
             docker pull ghcr.io/jose-henriquez2101/sga-farmacia:latest
             docker stop sga-farmacia || echo "No container to stop"
             docker rm sga-farmacia || echo "No container to remove"
-            docker run -d --name sga-farmacia -p 80:3000 ghcr.io/jose-henriquez2101/sga-farmacia:latest
+            cat > /tmp/sga-farmacia.env <<EOL
+            DATABASE_URL=${{ secrets.DB_URL }}
+            PORT=3000
+            EOL
+            docker run -d \
+              --name sga-farmacia \
+              -p 80:3000 \
+              --env-file /tmp/sga-farmacia.env \
+              ghcr.io/jose-henriquez2101/sga-farmacia:latest \
+              rm /tmp/sga-farmacia.env
           EOF

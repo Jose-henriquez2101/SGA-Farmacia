@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY prisma ./prisma
-COPY backend/.env .
 
 RUN npm install
 
