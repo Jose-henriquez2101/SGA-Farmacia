@@ -8,6 +8,7 @@ COPY prisma ./prisma
 RUN npm install
 
 COPY . .
+
 RUN npm install -g @nestjs/cli
 RUN npx prisma generate
 
