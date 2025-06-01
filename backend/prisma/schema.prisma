@@ -20,3 +20,16 @@ model Cliente {
   direccion String
   telefono  String
 }
+
+model Producto {
+  codigo  Int @id
+  nombre String
+  descripcion String
+  precio Int
+  categoria String
+  stock Int
+  stockmin Int // Stock mínimo para alertar
+  
+  // imagen String (Por ver)
+  fechaCreacion DateTime @default(now())
+}
