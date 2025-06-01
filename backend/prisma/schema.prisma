@@ -22,10 +22,35 @@ model Cliente {
 }
 
 model Producto {
-id Int @id @default(autoincrement())
-nombre String
-categoria String
-cantidad Int
-createdAt DateTime @default(now())
-updatedAt DateTime @updatedAt
+  id Int @id @default(autoincrement())
+  nombre String
+  categoria String
+  cantidad Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  inventarioItems InventarioItem[]
 }
+
+
+model Inventario {
+  id             Int             @id @default(autoincrement())
+  tipo           TipoCarga       // "GENERAL" | "SELECTIVO" | "BARRIDO"
+  fecha          DateTime        @default(now())
+  items          InventarioItem[]
+}
+
+model InventarioItem {
+  id             Int             @id @default(autoincrement())
+  productoId     Int
+  inventarioId   Int
+  cantidad       Int
+  producto       Producto        @relation(fields: [productoId], references: [id])
+  inventario     Inventario      @relation(fields: [inventarioId], references: [id])
+}
+
+enum TipoCarga {
+  GENERAL
+  SELECTIVO
+  BARRIDO
+}
+

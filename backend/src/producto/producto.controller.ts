@@ -9,7 +9,7 @@ export class ProductoController {
     constructor(private readonly productoService: ProductoService) {}
       //CRUD------------------------------------------------------------------------------
       @Post()
-      create(@Body() data: { nombre: string; categoria: string; cantidad: number }) {
+      create(@Body() data: { nombre: string; categoria: string; cantidad: number; nuevaCantidad: number }) {
         return this.productoService.create(data);
       }
     
