@@ -103,5 +103,9 @@ jobs:
             # Si el contenedor existe, lo elimina
             docker rm sga-farmacia || echo "No container to remove"
 
-            docker run -d --name sga-farmacia -p 80:3000 ghcr.io/jose-henriquez2101/sga-farmacia:latest
+            docker run -d \
+              --name sga-farmacia \
+              -p 80:3000 \
+              -e DATABASE_URL="${{ secrets.DB_URL }}" \
+              ghcr.io/jose-henriquez2101/sga-farmacia:latest
           EOF
