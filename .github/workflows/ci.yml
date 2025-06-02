@@ -3,7 +3,8 @@ name: CI
 on:
   push:
     branches: 
-    - Jose
+    - Desarrollo
+    - Produccion
   pull_request:
 
 jobs:
@@ -70,38 +71,3 @@ jobs:
       run: |
         docker build ./backend -t ghcr.io/jose-henriquez2101/sga-farmacia:latest
         docker push ghcr.io/jose-henriquez2101/sga-farmacia:latest
-
-
-  deploy:
-    needs: create-docker-image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key.pem
-          chmod 600 ~/.ssh/ec2_key.pem
-
-      - name: Deploy to EC2
-        run: |
-          #Conecta EC2 via SSH y
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/ec2_key.pem ec2-user@${{ secrets.EC2_IP }} << 'EOF'
-           
-            # Si hay errores, detiene la ejecución del script
-            set -e
-
-            #autentificación en el registro de contenedores de GitHub
-            echo "${{ secrets.TOKEN_CD }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-           
-
-           # descarga la ultima imagen del contenedor
-            docker pull ghcr.io/jose-henriquez2101/sga-farmacia:latest
-
-             # Si el contenedor esta corriendo, lo detiene
-            docker stop sga-farmacia || echo "No container to stop"
-
-            # Si el contenedor existe, lo elimina
-            docker rm sga-farmacia || echo "No container to remove"
-
-            docker run -d --name sga-farmacia -p 80:3000 ghcr.io/jose-henriquez2101/sga-farmacia:latest
-          EOF
