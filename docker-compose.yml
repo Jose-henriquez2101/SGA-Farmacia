@@ -20,10 +20,11 @@ services:
     environment:
       DATABASE_URL: mysql://root:root@db:3306/crud_db
     volumes:
-      - ./backend:/app
+      - ./backend:/app:cached
     depends_on:
       - db
     command: sh -c "npx prisma generate && npx prisma db push && npm run start:dev"
+
 
 volumes:
   db_data:

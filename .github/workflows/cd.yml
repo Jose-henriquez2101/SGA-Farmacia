@@ -1,0 +1,46 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [Produccion]
+
+jobs:
+  deploy:
+      runs-on: ubuntu-latest
+      if: ${{ github.event.workflow_run.conclusion == 'success' }}
+      steps:
+        - name: Configure SSH
+          run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key.pem
+            chmod 600 ~/.ssh/ec2_key.pem
+
+        - name: Deploy to EC2
+          run: |
+            #Conecta EC2 via SSH y
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/ec2_key.pem ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+            
+              # Si hay errores, detiene la ejecución del script
+              set -e
+
+              #autentificación en el registro de contenedores de GitHub
+              echo "${{ secrets.TOKEN_CD }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+
+            # descarga la ultima imagen del contenedor
+              docker pull ghcr.io/jose-henriquez2101/sga-farmacia:latest
+
+              # Si el contenedor esta corriendo, lo detiene
+              docker stop sga-farmacia || echo "No container to stop"
+
+              # Si el contenedor existe, lo elimina
+              docker rm sga-farmacia || echo "No container to remove"
+
+              docker run -d \
+                --name sga-farmacia \
+                -p 80:3000 \
+                -e DATABASE_URL="${{ secrets.DB_URL }}" \
+                ghcr.io/jose-henriquez2101/sga-farmacia:latest
+            EOF
