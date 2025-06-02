@@ -44,6 +44,14 @@ jobs:
                 -e DATABASE_URL="${{ secrets.DB_URL }}" \
                 ghcr.io/jose-henriquez2101/sga-farmacia:latest
 
+              # Node Exporter
+              docker stop node-exporter || echo "No container to stop"
+              docker rm node-exporter || echo "No container to remove"
+              docker run -d \
+                --name node-exporter \
+                -p 9100:9100 \
+                prom/node-exporter:v1.3.1
+
               # Prometheus
               docker volume create prometheus-data || echo "Volume already exists"
               docker stop prometheus || echo "No container to stop"
@@ -59,21 +67,7 @@ jobs:
                 --storage.tsdb.retention.time=1y \
                 --web.enable-lifecycle
 
-              # Node Exporter
-              docker stop node-exporter || echo "No container to stop"
-              docker rm node-exporter || echo "No container to remove"
-              docker run -d \
-                --name node-exporter \
-                -p 9100:9100 \
-                prom/node-exporter:v1.3.1
+              
 
-              # Grafana
-              docker volume create grafana-data || echo "Volume already exists"
-              docker stop grafana || echo "No container to stop"
-              docker rm grafana || echo "No container to remove"
-              docker run -d \
-                --name grafana \
-                -p 3001:3000 \
-                -v grafana-data:/var/lib/grafana \
-                grafana/grafana:latest
+              
             EOF
