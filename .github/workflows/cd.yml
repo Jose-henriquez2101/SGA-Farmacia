@@ -1,5 +1,5 @@
 name: CD
-
+ 
 on:
   workflow_run:
     workflows: ["CI"]
@@ -67,7 +67,11 @@ jobs:
                 --storage.tsdb.retention.time=1y \
                 --web.enable-lifecycle
 
-              
+                echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+                docker tag ghcr.io/jose-henriquez2101/sga-farmacia:latest docker.io/${{ secrets.DOCKERHUB_USERNAME }}/sga-farmacia:latest
+                docker push docker.io/${{ secrets.DOCKERHUB_USERNAME }}/sga-farmacia:latest
+                              
 
               
             EOF
