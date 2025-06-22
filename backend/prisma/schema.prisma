@@ -21,15 +21,23 @@ model Cliente {
   telefono  String
 }
 
+model Categoria {
+  id       Int        @id @default(autoincrement())
+  nombre   String
+  productos Producto[] // Relación: una categoría tiene muchos productos
+}
+
 model Producto {
-  codigo  Int @id
-  nombre String
-  descripcion String
-  precio Int
-  categoria String
-  stock Int
-  stockmin Int // Stock mínimo para alertar
-  
-  // imagen String (Por ver)
-  fechaCreacion DateTime @default(now())
+  codigo        Int       @id
+  nombre        String
+  descripcion   String
+  precio        Int
+  image         String?
+  stock         Int
+  stockmin      Int // Stock mínimo para alertar
+  fechaCreacion DateTime  @default(now())
+
+  // Relación con Categoria
+  categoriaId   Int
+  categoria     Categoria @relation(fields: [categoriaId], references: [id])
 }
