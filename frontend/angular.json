@@ -61,6 +61,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+          "viteBrowserOptions": {
+            "server": {
+              "host": true,
+              "allowedHosts": [
+                "ec2-54-161-250-11.compute-1.amazonaws.com"
+              ]
+            }
+          }
+          },
           "configurations": {
             "production": {
               "buildTarget": "frontend:build:production"
