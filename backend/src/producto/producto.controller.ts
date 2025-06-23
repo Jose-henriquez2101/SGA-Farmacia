@@ -6,7 +6,15 @@ export class ProductoController {
   constructor(private readonly productoService: ProductoService) {}
 
   @Post()
-  create(@Body() data: { codigo: number; nombre: string; descripcion: string; precio: number; categoria: string; stock: number; stockmin: number }) {
+  create(@Body() data: {
+    codigo: number;
+    nombre: string;
+    descripcion: string;
+    precio: number;
+    categoriaId: number;
+    stock: number;
+    stockmin: number;
+  }) {
     return this.productoService.create(data);
   }
 
@@ -21,8 +29,17 @@ export class ProductoController {
   }
 
   @Put(':codigo')
-  update(@Param('codigo') codigo: string, @Body() data: Partial<{ nombre?: string; descripcion?: string; precio?: number; categoria?: string; stock?: number; stockmin?: number  }>) {
-
+  update(
+    @Param('codigo') codigo: string,
+    @Body() data: Partial<{
+      nombre: string;
+      descripcion: string;
+      precio: number;
+      categoriaId: number;
+      stock: number;
+      stockmin: number;
+    }>,
+  ) {
     return this.productoService.update(+codigo, data);
   }
 
