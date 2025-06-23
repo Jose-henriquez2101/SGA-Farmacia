@@ -67,8 +67,21 @@ jobs:
                 --storage.tsdb.retention.time=1y \
                 --web.enable-lifecycle
 
-         
-                              
+              echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-              
+
+              docker stop frontend || echo "No hay contenedor frontend corriendo"
+              docker rm frontend || echo "No hay contenedor frontend que eliminar"
+
+              # DESCARGAR última imagen del frontend desde Docker Hub
+              docker pull docker.io/${{ secrets.DOCKERHUB_USERNAME }}/sga-farmacia:latest
+
+              # EJECUTAR nuevo contenedor de frontend
+              docker run -d \
+                --name frontend \
+                -p 4200:4200 \
+                docker.io/${{ secrets.DOCKERHUB_USERNAME }}/sga-farmacia:latest
+                                              
+
+                            
             EOF
