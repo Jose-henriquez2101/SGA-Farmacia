@@ -16,6 +16,8 @@ jobs:
             mkdir -p ~/.ssh
             echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key.pem
             chmod 600 ~/.ssh/ec2_key.pem
+            echo "${{ secrets.EC2_SSH_KEY_2 }}" > ~/.ssh/ec2_key2.pem
+            chmod 600 ~/.ssh/ec2_key2.pem
 
         - name: Deploy to EC2
           run: |
@@ -67,8 +69,15 @@ jobs:
                 --storage.tsdb.retention.time=1y \
                 --web.enable-lifecycle
 
-              echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+              
+                            
+            EOF
 
+        - name: Deploy to Second EC2
+          run: |
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/ec2_key2.pem ec2-user@${{ secrets.EC2_IP_2 }} << 'EOF'
+
+              echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
               docker stop frontend || echo "No hay contenedor frontend corriendo"
               docker rm frontend || echo "No hay contenedor frontend que eliminar"
@@ -79,9 +88,7 @@ jobs:
               # EJECUTAR nuevo contenedor de frontend
               docker run -d \
                 --name frontend \
-                -p 4200:4200 \
+                -p 80:4200 \
                 docker.io/${{ secrets.DOCKERHUB_USERNAME }}/sga-farmacia:latest
-                                              
 
-                            
             EOF
