@@ -7,7 +7,7 @@ import { Product } from '../product';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://ec2-13-218-198-226.compute-1.amazonaws.com/productos';
+  private apiUrl = 'http://ec2-44-204-161-5.compute-1.amazonaws.com/productos';
   filteredProducts: Product[] = [];
   public products: Product[]= [];
 
@@ -22,6 +22,6 @@ export class ProductService {
   }
 
   deleteProduct(id: number) {
-    return this.http.delete(`ec2-13-218-198-226.compute-1.amazonaws.com/productos/${id}`);
+    return this.http.delete(`http://ec2-44-204-161-5.compute-1.amazonaws.com/productos/${id}`);
   }
 }
