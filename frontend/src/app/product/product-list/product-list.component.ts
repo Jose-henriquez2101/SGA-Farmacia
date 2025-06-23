@@ -44,7 +44,7 @@ export class ProductListComponent implements OnInit {
 
   onImageError(event: Event) {
     const target = event.target as HTMLImageElement;
-    target.src = 'assets/sin-imagen.png';
+    target.src = 'assets/paracetamol.jpg';
   }
   get listFilter(): string {
     return this._listFilter;
