@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 4200
 
 # Comando para ejecutar la aplicación
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]
