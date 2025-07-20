@@ -31,7 +31,7 @@ export class ModalAddComponent {
     public modalAddService: ModalAddService
   ) {
     this.productForm = this.fb.group({
-      codigo: [''],
+      codigo: [null, [Validators.required, Validators.min(1)]],
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
       precio: [0.01, [Validators.required, Validators.min(0.01)]],
@@ -62,7 +62,7 @@ export class ModalAddComponent {
 
   loadProductToEdit(product: any): void {
     this.isEditing = true;
-    this.productId = product.id;
+    this.productId = product.codigo;
 
     this.productForm.patchValue({
       codigo: product.codigo,
@@ -83,6 +83,13 @@ export class ModalAddComponent {
 
     const formValue = this.productForm.value;
 
+    // Aseguramos que los campos que deben ser numéricos lo sean
+    formValue.codigo = Number(formValue.codigo);
+    formValue.precio = Number(formValue.precio);
+    formValue.stock = Number(formValue.stock);
+    formValue.stockmin = Number(formValue.stockmin);
+    formValue.categoriaId = Number(formValue.categoriaId);
+
     if (this.isEditing && this.productId !== null) {
       this.productService.updateProduct(this.productId, formValue).subscribe(
         () => {
@@ -92,6 +99,7 @@ export class ModalAddComponent {
         (error) => console.error('Error actualizando producto', error)
       );
     } else {
+      console.log('Producto enviado:', formValue); // asegúrate de ver el tipo de datos en consola
       this.productService.createProduct(formValue).subscribe(
         () => {
           this.modalAddService.ocultarModalAdd();
@@ -106,7 +114,7 @@ export class ModalAddComponent {
     this.productId = null;
     this.isEditing = false;
     this.productForm = this.fb.group({
-      codigo: [''],
+      codigo: [null, [Validators.required, Validators.min(1)]],
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
       precio: [0.01, [Validators.required, Validators.min(0.01)]],

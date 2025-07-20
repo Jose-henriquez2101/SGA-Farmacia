@@ -18,12 +18,14 @@
       <div class="modal-body">
         <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
           <div class="mb-3">
-            <label for="codigo" class="form-label">Código (opcional)</label>
+            <label for="codigo" class="form-label">Código</label>
             <input
-              type="text"
+              type="number"
               class="form-control"
               id="codigo"
               formControlName="codigo"
+              required
+              min="1"
             />
           </div>
 
