@@ -47,34 +47,39 @@ export class CarritoListarComponent implements OnInit {
     return this.carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
   }
 
-generarPDF() {
-  console.log('generarPDF() se ha llamado');
+  generarPDF() {
+    console.log('generarPDF() se ha llamado');
 
-  const doc = new jsPDF();
+    const doc = new jsPDF();
 
-  doc.setFontSize(18);
-  doc.text('Boleta de Compra', 14, 22);
+     // obtener la fecha actual en formato dd/mm/yyyy
+    const hoy = new Date();
+    const fecha = `${hoy.getDate().toString().padStart(2, '0')}/${
+    (hoy.getMonth() + 1).toString().padStart(2, '0')}/${hoy.getFullYear()}`;
 
-  const headers = [['Producto', 'Descripción', 'Precio', 'Cantidad', 'Subtotal']];
-  const data = this.carrito.map(item => [
-    item.nombre,
-    item.descripcion,
-    `$${item.precio.toFixed(2)}`,
-    item.cantidad,
-    `$${(item.precio * item.cantidad).toFixed(2)}`
-  ]);
 
-  autoTable(doc, {
-    head: headers,
-    body: data,
-    startY: 30,
-  });
+    doc.setFontSize(18);
+    doc.text(`Boleta de Compra - ${fecha}`, 14, 22);
 
-  const total = this.getTotal().toFixed(2);
-  doc.text(`Total: $${total}`, 14, ((doc as any).lastAutoTable?.finalY || 40) + 10);
+    const headers = [['Producto', 'Descripción', 'Precio', 'Cantidad', 'Subtotal']];
+    const data = this.carrito.map(item => [
+      item.nombre,
+      item.descripcion,
+      `$${item.precio.toFixed(2)}`,
+      item.cantidad,
+      `$${(item.precio * item.cantidad).toFixed(2)}`
+    ]);
 
-  doc.save('boleta.pdf');
-}
+    autoTable(doc, {
+      head: headers,
+      body: data,
+      startY: 30,
+    });
 
+    const total = this.getTotal().toFixed(2);
+    doc.text(`Total: $${total}`, 14, ((doc as any).lastAutoTable?.finalY || 40) + 10);
+
+    doc.save('boleta.pdf');
+  }
 
 }
