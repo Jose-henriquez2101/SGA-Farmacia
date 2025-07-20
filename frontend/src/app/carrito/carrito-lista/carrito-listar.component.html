@@ -26,15 +26,15 @@
                                 <td>{{ item.cantidad }}</td>
                                 <td>
                                 <div class="btn-group" role="group">
-                                    <button class="btn btn-sm" (click)="incrementar(item)" style="background-color: #DDC1A0; border-color: #DDC1A0;">
+                                    <button class="btn btn-sm" (click)="incrementar(item)" style="background-color: #1d8b6a; border-color: #1d8b6a; color: white;">
                                     <i class="fa fa-plus"></i>
                                     </button>
                                     &nbsp;
-                                    <button class="btn btn-sm" (click)="eliminar(item)" style="background-color: #ffffff; border-color: #DDC1A0;">
+                                    <button class="btn btn-sm" (click)="eliminar(item)" style="background-color: #ffffff; border-color: #1d8b6a;">
                                     <i class="fa fa-trash"></i>
                                     </button>
                                     &nbsp;
-                                    <button class="btn btn-sm" (click)="decrementar(item)" style="background-color: #DDC1A0; border-color: #DDC1A0;">
+                                    <button class="btn btn-sm" (click)="decrementar(item)" style="background-color: #1d8b6a; border-color: #1d8b6a; color: white;">
                                     <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
@@ -56,7 +56,7 @@
                         <h5>Resumen Compra</h5>
                         <hr />
                         <h5>Total: ${{ getTotal() | number:'1.2-2' }}</h5>
-                        <button class="btn btn-dark">Procesar compra</button>
+                        <button class="btn btn-dark" (click)="generarPDF()">Procesar compra</button>
                         <button class="btn btn-danger mt-3" (click)="vaciarCarrito()">Vaciar Carrito</button>
                     </div>
                     </div>
