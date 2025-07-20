@@ -10,7 +10,7 @@ export class CarritoService {
 
   agregar(producto: any) {
     const carrito = this.obtener();
-    const existente = carrito.find(item => item.id === producto.id);
+    const existente = carrito.find(item => item.codigo === producto.codigo);
     const cantidadAAgregar = producto.cantidad ?? 1;
 
     if (existente) {

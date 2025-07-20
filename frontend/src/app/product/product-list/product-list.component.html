@@ -86,13 +86,12 @@
     </div>
   </div>
 </div>
-<!--  
+  
 <app-modal-add></app-modal-add>
 <app-modal-cantidad
-  *ngIf="mostrarModal"
+  *ngIf="mostrarModal && productoSeleccionado"
   [producto]="productoSeleccionado"
   (cerrar)="cerrarModal()"
   (confirmar)="confirmarCantidad($event)"
->
-</app-modal-cantidad>
--->
+></app-modal-cantidad>
+

@@ -43,6 +43,6 @@ export class CarritoListarComponent implements OnInit {
 
 
   getTotal(): number {
-    return this.carrito.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+    return this.carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
   }
 }
