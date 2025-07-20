@@ -7,7 +7,7 @@ import { Category } from '../category';
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'http://ec2-44-204-161-5.compute-1.amazonaws.com/categorias';
+  private apiUrl = 'http://ec2-3-87-48-145.compute-1.amazonaws.com/categorias';
 
   constructor(private http: HttpClient) {}
 
