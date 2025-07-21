@@ -3,11 +3,13 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CarritoListarComponent } from './carrito/carrito-lista/carrito-listar.component';
 import { UserTableComponent } from './user-table/user-table.component';
+import { ClienteListComponent } from './cliente/cliente-list.component';
 
 export const routes: Routes = [
   { path: '', component: ProductListComponent },
   { path: 'product/product-list', component: ProductListComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'carrito/carrito-listar', component: CarritoListarComponent },
-  { path: 'usuarios', component: UserTableComponent}
+  { path: 'usuarios', component: UserTableComponent},
+  { path: 'clientes', component: ClienteListComponent},
 ];
