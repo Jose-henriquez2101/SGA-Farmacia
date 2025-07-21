@@ -6,7 +6,7 @@ export class ClienteController {
   constructor(private readonly clienteService: ClienteService) {}
 
   @Post()
-  create(@Body() data: { nombre: string; rut: string; direccion: string; telefono: string }) {
+  create(@Body() data: { nombre: string; rut: string; direccion: string; telefono: string; password: string }) {
     return this.clienteService.create(data);
   }
 
@@ -21,7 +21,10 @@ export class ClienteController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() data: Partial<{ nombre?: string; rut?: string; direccion?: string; telefono?: string }>) {
+  update(
+    @Param('id') id: string,
+    @Body() data: Partial<{ nombre?: string; rut?: string; direccion?: string; telefono?: string; password?: string }>
+  ) {
     return this.clienteService.update(+id, data);
   }
 

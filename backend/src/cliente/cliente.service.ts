@@ -25,8 +25,14 @@ export class ClienteService {
     return prisma.cliente.findUnique({ where: { id } });
   }
 
-  update(id: number, data: Partial<{ nombre: string; rut: string; direccion: string; telefono: string }>) {
-    return prisma.cliente.update({ where: { id }, data });
+  update(
+    id: number,
+    data: Partial<{ nombre: string; rut: string; direccion: string; telefono: string; password: string }>
+  ) {
+    return prisma.cliente.update({
+      where: { id },
+      data,
+    });
   }
 
   remove(id: number) {
