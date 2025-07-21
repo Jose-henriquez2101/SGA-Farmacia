@@ -9,11 +9,12 @@ import { WelcomeComponent } from "./welcome/welcome.component";
 import { CommonModule } from '@angular/common';
 import { ModalAddComponent } from './services/modal-add/modal-add.component';
 import { CategorySidebarComponent } from './category/category-sidebar/category-sidebar.component';
+import { UserTableComponent } from './user-table/user-table.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent, CategorySidebarComponent, ModalAddComponent],//, ModalAddComponent, ],
+  imports: [CommonModule, RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent, CategorySidebarComponent, ModalAddComponent, UserTableComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
