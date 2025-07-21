@@ -3,11 +3,13 @@
   <h2>Usuarios</h2>
 
   <form (ngSubmit)="isEditing ? updateUsuario() : createUsuario()">
-    <input type="text" [(ngModel)]="newUser.name" name="name" placeholder="Nombre" required />
-    <input type="email" [(ngModel)]="newUser.email" name="email" placeholder="Email" required />
-    <button type="submit">{{ isEditing ? 'Actualizar' : 'Crear' }}</button>
-    <button type="button" (click)="cancelEdit()" *ngIf="isEditing">Cancelar</button>
-  </form>
+  <input type="text" [(ngModel)]="newUser.name" name="name" placeholder="Nombre" required />
+  <input type="email" [(ngModel)]="newUser.email" name="email" placeholder="Email" required />
+  <input type="password" [(ngModel)]="newUser.password" name="password" placeholder="Contraseña" required />
+  <button type="submit">{{ isEditing ? 'Actualizar' : 'Crear' }}</button>
+  <button type="button" (click)="cancelEdit()" *ngIf="isEditing">Cancelar</button>
+</form>
+
 
   <table>
     <thead>

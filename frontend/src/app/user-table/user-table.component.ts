@@ -14,7 +14,7 @@ import { Usuarios } from '../usuarios';
 })
 export class UserTableComponent implements OnInit {
   usuarios: Usuarios[] = [];
-  newUser: Omit<Usuarios, 'id'> = { name: '', email: '' };
+  newUser: Omit<Usuarios, 'id'> = { name: '', email: '', password: '' };
   editingId: number | null = null;
   editingEmail: string | null = null;
   isEditing: boolean = false;
@@ -34,15 +34,20 @@ export class UserTableComponent implements OnInit {
   createUsuario() {
     this.userService.createUsuario(this.newUser).subscribe(() => {
       this.loadUsuarios();
-      this.newUser = { name: '', email: '' };
+      this.newUser = { name: '', email: '', password: '' };
     });
   }
 
   startEdit(user: Usuarios) {
-    this.newUser = { name: user.name, email: user.email };
+    this.newUser = {
+      name: user.name,
+      email: user.email,
+      password: ''
+    };
     this.editingId = user.id;
     this.isEditing = true;
   }
+
 
 
   updateUsuario() {
@@ -56,7 +61,7 @@ export class UserTableComponent implements OnInit {
 
 
   cancelEdit() {
-    this.newUser = { name: '', email: '' };
+    this.newUser = { name: '', email: '', password: '' };
     this.isEditing = false;
     this.editingId = null;
   }
