@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../product-list.service';
-//import { CarritoService } from '../../carrito/carrito-listar/servicio/carrito-service';
+import { CarritoService } from '../../carrito/servicio/carrito-service';
 import { Product } from '../../product';
-//import { ModalAddComponent } from '../../services/modal-add/modal-add.component';
-//import { ModalAddService } from '../../services/modal-add.service';
+import { ModalAddComponent } from '../../services/modal-add/modal-add.component';
+import { ModalAddService } from '../../services/modal-add.service';
 import { FormsModule } from '@angular/forms';
-//import { ModalCantidadComponent } from '../../modal-cantidad/modal-cantidad.component';
+import { ModalCantidadComponent } from '../../modal-cantidad/modal-cantidad.component';
 
 @Component({
   selector: 'app-product-list',
@@ -15,9 +15,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     HttpClientModule,
-    //ModalAddComponent,
+    ModalAddComponent,
     FormsModule,
-    //ModalCantidadComponent,
+    ModalCantidadComponent,
   ],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
@@ -26,7 +26,7 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   _listFilter: string = '';
 
-  //@ViewChild(ModalAddComponent) modalAddComponent!: ModalAddComponent;
+  @ViewChild(ModalAddComponent) modalAddComponent!: ModalAddComponent;
 
   productoSeleccionado: any = null;
   mostrarModal: boolean = false;
@@ -37,9 +37,9 @@ export class ProductListComponent implements OnInit {
   total: number = 0;
 
   constructor(
-    //public carritoService: CarritoService,
+    public carritoService: CarritoService,
     public productService: ProductService,
-    //public modalAddService: ModalAddService
+    public modalAddService: ModalAddService
   ) {}
 
   onImageError(event: Event) {
@@ -71,12 +71,12 @@ export class ProductListComponent implements OnInit {
   }
 
   agregar(producto: any) {
-    //this.carritoService.agregar(producto);
+    this.carritoService.agregar(producto);
     alert(`${producto.nombre} agregado al carrito`);
   }
 
   editarProducto(product: any) {
-    //this.modalAddComponent.loadProductToEdit(product);
+    this.modalAddComponent.loadProductToEdit(product);
   }
 
   eliminarProducto(product: any) {
@@ -100,8 +100,8 @@ export class ProductListComponent implements OnInit {
   }
 
   abrirModalAdd() {
-    //this.modalAddComponent.resetModal();
-    //this.modalAddService.mostrarModalAdd();
+    this.modalAddComponent.resetModal();
+    this.modalAddService.mostrarModalAdd();
   }
 
   abrirModal(product: any) {
@@ -115,8 +115,14 @@ export class ProductListComponent implements OnInit {
   }
 
   confirmarCantidad(cantidad: number) {
-    //this.carritoService.agregar({ ...this.productoSeleccionado, cantidad });
+    if (!this.productoSeleccionado) {
+      console.error('Producto no definido');
+      return;
+    }
+
+    this.carritoService.agregar({ ...this.productoSeleccionado, cantidad });
     this.cerrarModal();
     alert(`${this.productoSeleccionado.nombre} x${cantidad} agregado al carrito`);
   }
+
 }
