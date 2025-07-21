@@ -46,30 +46,6 @@ jobs:
                 -e DATABASE_URL="${{ secrets.DB_URL }}" \
                 ghcr.io/jose-henriquez2101/sga-farmacia:latest
 
-              # Node Exporter
-              docker stop node-exporter || echo "No container to stop"
-              docker rm node-exporter || echo "No container to remove"
-              docker run -d \
-                --name node-exporter \
-                -p 9100:9100 \
-                prom/node-exporter:v1.3.1
-
-              # Prometheus
-              docker volume create prometheus-data || echo "Volume already exists"
-              docker stop prometheus || echo "No container to stop"
-              docker rm prometheus || echo "No container to remove"
-              docker run -d \
-                --name prometheus \
-                -p 9090:9090 \
-                -v ~/SGA-Farmacia/prometheus.yml:/etc/prometheus/prometheus.yml \
-                -v prometheus-data:/prometheus \
-                prom/prometheus:v2.28.1 \
-                --config.file=/etc/prometheus/prometheus.yml \
-                --storage.tsdb.path=/prometheus \
-                --storage.tsdb.retention.time=1y \
-                --web.enable-lifecycle
-
-              
                             
             EOF
 
@@ -81,6 +57,7 @@ jobs:
 
               docker stop frontend || echo "No hay contenedor frontend corriendo"
               docker rm frontend || echo "No hay contenedor frontend que eliminar"
+              docker system prune -a --volumes -f
 
               # DESCARGAR última imagen del frontend desde Docker Hub
               docker pull docker.io/${{ secrets.DOCKERHUB_USERNAME }}/sga-farmacia:latest

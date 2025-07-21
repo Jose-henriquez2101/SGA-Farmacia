@@ -1,0 +1,33 @@
+<!-- src/app/user-table/user-table.component.html -->
+<div class="container">
+  <h2>Usuarios</h2>
+
+  <form (ngSubmit)="isEditing ? updateUsuario() : createUsuario()">
+  <input type="text" [(ngModel)]="newUser.name" name="name" placeholder="Nombre" required />
+  <input type="email" [(ngModel)]="newUser.email" name="email" placeholder="Email" required />
+  <input type="password" [(ngModel)]="newUser.password" name="password" placeholder="Contraseña" required />
+  <button type="submit">{{ isEditing ? 'Actualizar' : 'Crear' }}</button>
+  <button type="button" (click)="cancelEdit()" *ngIf="isEditing">Cancelar</button>
+</form>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of usuarios">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            <button (click)="startEdit(user)">Editar</button>
+            <button (click)="deleteUsuario(user.id)">Eliminar</button>
+        </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
