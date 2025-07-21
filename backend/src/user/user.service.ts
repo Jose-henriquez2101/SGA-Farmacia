@@ -17,7 +17,7 @@ export class UserService {
     return prisma.user.findUnique({ where: { id } });
   }
 
-  async update(id: number, data: { name?: string; email?: string }) {
+  async update(id: number, data: { name?: string; email?: string; password?: string }) {
     return prisma.user.update({ where: { id }, data });
   }
 

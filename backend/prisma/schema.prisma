@@ -11,14 +11,17 @@ model User {
   id    Int    @id @default(autoincrement())
   name  String
   email String @unique
+  password  String?
 }
 
 model Cliente {
   id        Int    @id @default(autoincrement())
   nombre    String
   rut       String @unique
+  password  String?
   direccion String
   telefono  String
+  boletas   Boleta[] // <- relación inversa añadida
 }
 
 model Categoria {
@@ -40,4 +43,28 @@ model Producto {
   // Relación con Categoria
   categoriaId   Int
   categoria     Categoria @relation(fields: [categoriaId], references: [id])
+  detalles      DetalleBoleta[] // ← relación inversa
 }
+
+model Boleta {
+  id         Int             @id @default(autoincrement())
+  fecha      DateTime        @default(now())
+  total      Int
+  clienteId  Int
+  cliente    Cliente         @relation(fields: [clienteId], references: [id])
+  detalles   DetalleBoleta[] // Relación con los productos
+}
+
+model DetalleBoleta {
+  id         Int      @id @default(autoincrement())
+  boletaId   Int
+  productoId Int
+  cantidad   Int
+  subtotal   Int
+
+  boleta     Boleta   @relation(fields: [boletaId], references: [id])
+  producto   Producto @relation(fields: [productoId], references: [codigo])
+
+  @@unique([boletaId, productoId]) // evita duplicar el mismo producto en la misma boleta
+}
+

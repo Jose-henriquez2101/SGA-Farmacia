@@ -6,7 +6,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() data: { name: string; email: string }) {
+  create(@Body() data: { name: string; email: string; password: string }) {
     return this.userService.create(data);
   }
 
@@ -21,8 +21,10 @@ export class UserController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() data: { name?: string; email?: string }) {
-
+  update(
+    @Param('id') id: string,
+    @Body() data: Partial<{ name?: string; email?: string; password?: string }>
+  ) {
     return this.userService.update(+id, data);
   }
 
