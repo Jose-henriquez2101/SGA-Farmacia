@@ -4,8 +4,9 @@ import { ClienteModule } from './cliente/cliente.module';
 import { ProductoModule } from './producto/producto.module';
 import { PrometheusModule } from "@willsoto/nestjs-prometheus";
 import { CategoriaModule } from './categoria/categoria.module';
+import { BoletaModule } from './boleta/boleta.module';
 
 @Module({
-  imports: [UserModule, ClienteModule, ProductoModule, CategoriaModule, PrometheusModule.register()],
+  imports: [UserModule, ClienteModule, ProductoModule, CategoriaModule, BoletaModule, PrometheusModule.register()],
 })
 export class AppModule {}
