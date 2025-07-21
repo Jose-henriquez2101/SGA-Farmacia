@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h2>Clientes</h2>
+
+  <form (ngSubmit)="isEditing ? updateCliente() : createCliente()" class="mb-4">
+    <div class="row g-2">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="newCliente.nombre" name="nombre" required />
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="RUT" [(ngModel)]="newCliente.rut" name="rut" required />
+      </div>
+      <div class="col">
+        <input type="password" class="form-control" placeholder="Password" [(ngModel)]="newCliente.password" name="password" required />
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Dirección" [(ngModel)]="newCliente.direccion" name="direccion" required />
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Teléfono" [(ngModel)]="newCliente.telefono" name="telefono" required />
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary me-2" type="submit">
+          {{ isEditing ? 'Actualizar' : 'Crear' }}
+        </button>
+        <button class="btn btn-secondary" type="button" *ngIf="isEditing" (click)="cancelEdit()">Cancelar</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>RUT</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes">
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.rut }}</td>
+        <td>{{ cliente.direccion }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="startEdit(cliente)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteCliente(cliente.id!)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
