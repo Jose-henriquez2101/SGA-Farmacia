@@ -60,6 +60,9 @@
       <h3>{{ product.nombre }}</h3>
       <p>{{ product.descripcion }}</p>
       <p><strong>Precio:</strong> ${{ product.precio }}</p>
+      <p *ngIf="isAdmin" [ngClass]="{ 'text-danger': product.stock <= product.stockmin }">
+        <strong>Stock:</strong> {{ product.stock }}
+      </p>
       <button
         type="button"
         class="btn btn-sm btn-dark"
